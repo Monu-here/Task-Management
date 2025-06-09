@@ -174,6 +174,9 @@
 </head>
 
 <body>
+    @php
+        $projects = DB::table('projects')->get();
+    @endphp
     <div class="container-fluid">
         <div class="main-container">
             <div class="row content-row">
@@ -186,35 +189,39 @@
                             </button>
                         </div>
                         <div class="filter-section">
-                            <div class="row g-3">
-                                <div class="col-md-4">
-                                    <label class="form-label fw-semibold">Project</label>
-                                    <select class="form-select">
-                                        <option>All</option>
-                                        <option>Project Alpha</option>
-                                        <option>Project Beta</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-4">
-                                    <label class="form-label fw-semibold">Status</label>
-                                    <select class="form-select">
-                                        <option>All</option>
-                                        <option>In Progress</option>
-                                        <option>Completed</option>
-                                        <option>Pending</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-4 d-flex align-items-end">
-                                    <div class="btn-group-custom d-flex w-100">
-                                        <button class="btn btn-primary-custom flex-fill">
-                                            <i class="fas fa-filter me-1"></i> Filter Tasks
-                                        </button>
-                                        <button class="btn btn-danger-custom flex-fill">
-                                            <i class="fas fa-times me-1"></i> Reset Filter
-                                        </button>
+                            <form action="{{ route('home') }}" action="GET">
+                                <div class="row g-3">
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-semibold">Project</label>
+                                        <select name="project_id" id="project_id" class="form-control">
+                                            <option value="" selected disabled>Select Project</option>
+                                            @foreach ($projects as $project)
+                                                <option value="{{ $project->id }}">{{ $project->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-semibold">Status</label>
+                                        <select name="status" id="status" class="form-control">
+                                            <option value="" selected disabled>Select Project</option>
+                                            <option value="0">Pending</option>
+                                            <option value="1">Completed</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 d-flex align-items-end">
+                                        <div class="btn-group-custom d-flex w-100">
+                                            <button class="btn btn-primary-custom flex-fill">
+                                                <i class="fas fa-filter me-1"></i> Filter Tasks
+                                            </button>
+                                            <a href="{{ route('home') }}">
+                                                <button class="btn btn-danger-custom flex-fill">
+                                                    <i class="fas fa-times me-1"></i> Reset Filter
+                                                </button>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
 
                         @if ($tasks->isNotEmpty())
@@ -226,8 +233,8 @@
                                                 @if (!$task->status == 0) style="text-decoration: line-through;" @endif>
                                                 <h6 class="fw-bold text-primary mb-2">{{ $task->task_name }}</h6>
                                                 <p class="text-muted mb-2">
-                                                    <strong>Project Name:</strong> <span
-                                                        class="text-primary">{{ $task->projects->name }}</span>
+                                                    <strong>Project Name:</strong>
+                                                    <span class="text-primary">{{ $task->projects->name }}</span>
                                                 </p>
                                                 <p class="text-muted mb-2">
                                                     <strong>Description:</strong> <span
@@ -269,7 +276,6 @@
                                         </div>
                                     </div>
                                 @endif
-                                @include('task-edit')
                                 @include('task-status-edit')
                             @endforeach
                         @else

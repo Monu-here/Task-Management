@@ -8,10 +8,18 @@ use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
-    public function home()
+    public function home(Request $request)
     {
         $projects = DB::table('projects')->orderBy('created_at', 'desc')->get();
-        $tasks = Task::with('projects')->orderBy('created_at', 'desc')->get();
-        return view('welcome',compact('projects','tasks'));
+        $tasksQuery = Task::with('projects')->orderBy('created_at', 'desc');
+        if ($request->filled('project_id')) {
+            $tasksQuery->where('project_id', $request->project_id);
+        }
+
+        if ($request->filled('status')) {
+            $tasksQuery->where('status', $request->status);
+        }
+        $tasks = $tasksQuery->get();
+        return view('welcome', compact('projects', 'tasks'));
     }
 }

@@ -5,7 +5,7 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('', [HomeController::class, 'home'])->name('home');
+Route::match(['get', 'post'], '/', [HomeController::class, 'home'])->name('home');
 Route::prefix('project')->name('project.')->group(function () {
     Route::post('add', [ProjectController::class, 'addProject'])->name('add');
     Route::post('update/{uuid}', [ProjectController::class, 'update'])->name('update');
