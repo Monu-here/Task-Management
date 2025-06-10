@@ -189,7 +189,8 @@
                             </button>
                         </div>
                         <div class="filter-section">
-                            <form action="{{ route('home') }}" action="GET">
+                            <form action="{{ route('filterData') }}" method="POST">
+                                @csrf
                                 <div class="row g-3">
                                     <div class="col-md-4">
                                         <label class="form-label fw-semibold">Project</label>
@@ -276,7 +277,8 @@
                                         </div>
                                     </div>
                                 @endif
-                                @include('task-status-edit')
+
+                                @include('task.task-status-edit')
                             @endforeach
                         @else
                             <div class="text-center text-muted">No Task are created.</div>
@@ -319,7 +321,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                @include('project-edit')
+                                @include('project.project-edit')
                             @endforeach
                         @else
                             <div class="text-center text-muted">No projects.</div>
@@ -330,10 +332,10 @@
         </div>
     </div>
     {{-- {{project model open }} --}}
-    @include('project-add')
+    @include('project.project-add')
     {{-- {{Project Model close}} --}}
-    @include('task-add')
-    @include('task-edit')
+    @include('task.task-add')
+    @include('task.task-edit')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
     @if (Session::has('success'))
