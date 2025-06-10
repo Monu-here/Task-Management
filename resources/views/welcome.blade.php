@@ -270,7 +270,7 @@
                                             </div>
                                             <div class="action-buttons">
                                                 <button class="btn btn-outline-primary btn-sm-custom"
-                                                    @if (!$task->status == 0) disabled @endif
+                                                    @if (!$task->status == 0) style="display: none;" @endif
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#taskupdate{{ $task->id }}">
                                                     <i class="fas fa-edit me-1"></i> Edit
@@ -279,7 +279,7 @@
                                                     <button
                                                         onclick="return confirm('Are you want to delete this task');"
                                                         class="btn btn-outline-danger btn-sm-custom"
-                                                        @if (!$task->status == 0) disabled @endif>
+                                                         @if (!$task->status == 0) style="display: none;" @endif>
                                                         <i class="fas fa-trash me-1"></i>
                                                         Delete
                                                     </button>

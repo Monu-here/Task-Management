@@ -15,8 +15,8 @@
                                 <label for="status">Status Update</label>
                                 <select name="status" id="status" class="form-control">
                                     <option value="" selected disabled>Select Status</option>
-                                    <option value="0">Pending</option>
-                                    <option value="1">Completed</option>
+                                    <option value="0" {{ old('status', $task->status) == '0' ? 'selected' : '' }}>Pending</option>
+                                    <option value="1" {{ old('status', $task->status) == '1' ? 'selected' : '' }}>Completed</option>
                                 </select>
                             </div>
                         </div>
