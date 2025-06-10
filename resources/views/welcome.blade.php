@@ -189,24 +189,35 @@
                             </button>
                         </div>
                         <div class="filter-section">
-                            <form action="{{ route('filterData') }}" method="POST">
+                            <form action="{{ route('home') }}" method="POST">
                                 @csrf
                                 <div class="row g-3">
                                     <div class="col-md-4">
                                         <label class="form-label fw-semibold">Project</label>
                                         <select name="project_id" id="project_id" class="form-control">
-                                            <option value="" selected disabled>Select Project</option>
+                                            <option value="" disabled
+                                                {{ old('project_id', request('project_id')) ? '' : 'selected' }}>Select
+                                                Project</option>
                                             @foreach ($projects as $project)
-                                                <option value="{{ $project->id }}">{{ $project->name }}</option>
+                                                <option value="{{ $project->id }}"
+                                                    {{ old('project_id', request('project_id')) == $project->id ? 'selected' : '' }}>
+                                                    {{ $project->name }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="col-md-4">
                                         <label class="form-label fw-semibold">Status</label>
                                         <select name="status" id="status" class="form-control">
-                                            <option value="" selected disabled>Select Project</option>
-                                            <option value="0">Pending</option>
-                                            <option value="1">Completed</option>
+                                            <option value="" disabled
+                                                {{ old('status', request('status')) === null ? 'selected' : '' }}>Select
+                                                Status</option>
+                                            <option value="0"
+                                                {{ old('status', request('status')) == '0' ? 'selected' : '' }}>Pending
+                                            </option>
+                                            <option value="1"
+                                                {{ old('status', request('status')) == '1' ? 'selected' : '' }}>
+                                                Completed</option>
                                         </select>
                                     </div>
                                     <div class="col-md-4 d-flex align-items-end">
@@ -278,6 +289,7 @@
                                     </div>
                                 @endif
 
+                                @include('task.task-edit')
                                 @include('task.task-status-edit')
                             @endforeach
                         @else
