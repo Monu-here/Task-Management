@@ -51,7 +51,12 @@ class ProjectController extends Controller
         if (!$data) {
             return redirect()->back()->with('message', 'No project found');
         }
+        if (DB::table('tasks')->where('project_id', $data->id)->exists()) {
+            return redirect()->back()->with('error', 'Project can not be deleted because it has associated tasks.');
+        }
         DB::table('projects')->where('uuid', $uuid)->delete();
+
+
         return redirect()->back()->with('success', 'Project delete successfully.');
     }
 }
