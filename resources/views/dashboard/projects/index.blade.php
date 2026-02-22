@@ -85,7 +85,6 @@
 </head>
 <body>
 <div class="d-flex">
-    <!-- Sidebar -->
     <div class="sidebar">
         <div class="text-white mb-5">
             <h4>
@@ -115,7 +114,6 @@
         </nav>
     </div>
 
-    <!-- Main Content -->
     <div class="main-content" style="width: 75%;">
         <div class="header">
             <div>
@@ -160,7 +158,6 @@
                 </div>
             </div>
 
-            <!-- Edit Modal -->
             <div class="modal fade" id="editProjectModal{{ $project->id }}" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -199,7 +196,6 @@
     </div>
 </div>
 
-<!-- Create Project Modal -->
 <div class="modal fade" id="createProjectModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -218,7 +214,7 @@
                         <label for="color_code" class="form-label">Color Code</label>
                         <input type="color" class="form-control form-control-color @error('color_code') is-invalid @enderror" name="color_code" value="#667eea" required>
                     </div>
-                    
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

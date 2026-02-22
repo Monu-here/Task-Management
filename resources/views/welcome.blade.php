@@ -228,7 +228,6 @@
                             </div>
                         @endif
 
-                        <!-- Task Status Update Modals -->
                         @if ($tasks->isNotEmpty())
                             @foreach ($tasks as $task)
                                 <div class="modal fade" id="taskStatusUpdate{{ $task->id }}" tabindex="-1" aria-labelledby="taskStatusUpdateLabel{{ $task->id }}" aria-hidden="true">

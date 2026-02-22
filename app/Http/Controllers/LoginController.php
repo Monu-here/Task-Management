@@ -20,13 +20,11 @@ class LoginController extends Controller
                 return redirect()->back()->withErrors($validator)->withInput();
             }
 
-            // Attempt authentication with email and password only
             $credentials = $request->only('email', 'password');
 
             if (Auth::attempt($credentials)) {
                 $user = Auth::user();
 
-                // Redirect based on user role
                 if ($user->role === 'super_admin' || $user->role === 'admin') {
                     return redirect()->route('admin.dashboard');
                 } else {

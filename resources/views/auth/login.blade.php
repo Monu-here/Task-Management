@@ -14,7 +14,6 @@
         <div class="row justify-content-center">
             <div class="col-md-6 col-lg-5">
                 <div class="card shadow-lg border-0" style="border-radius: 15px;">
-                    <!-- Card Header -->
                     <div class="card-header bg-gradient text-white text-center py-4" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 15px 15px 0 0;">
                         <h3 class="mb-0">
                             <i class="fas fa-sign-in-alt me-2"></i>Welcome Back
@@ -22,7 +21,6 @@
                         <p class="small mt-2 mb-0">Sign in to your account</p>
                     </div>
 
-                    <!-- Card Body -->
                     <div class="card-body p-5">
                         @if ($errors->any())
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -37,7 +35,6 @@
                         <form method="POST" action="{{route('login.submit')}}" novalidate>
                             @csrf
 
-                            <!-- Email Field -->
                             <div class="form-group mb-4">
                                 <label for="email" class="form-label fw-bold text-dark">Email Address</label>
                                 <div class="input-group">
@@ -61,7 +58,6 @@
                                 @enderror
                             </div>
 
-                            <!-- Password Field -->
                             <div class="form-group mb-2">
                                 <label for="password" class="form-label fw-bold text-dark">Password</label>
                                 <div class="input-group">
@@ -83,9 +79,8 @@
                                 @enderror
                             </div>
 
-                           
 
-                            <!-- Login Button -->
+
                             <button
                                 type="submit"
                                 class="btn w-100 py-2 fw-bold text-white"

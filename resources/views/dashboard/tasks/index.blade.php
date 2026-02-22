@@ -90,7 +90,6 @@
 </head>
 <body>
 <div class="d-flex">
-    <!-- Sidebar -->
     <div class="sidebar">
         <div class="text-white mb-5">
             <h4>
@@ -120,7 +119,6 @@
         </nav>
     </div>
 
-    <!-- Main Content -->
     <div class="main-content" style="width: 75%;">
         <div class="header">
             <div>
@@ -180,7 +178,6 @@
                             </td>
                         </tr>
 
-                        <!-- Edit Modal -->
                         <div class="modal fade" id="editTaskModal{{ $task->id }}" tabindex="-1">
                             <div class="modal-dialog">
                                 <div class="modal-content">
@@ -237,7 +234,6 @@
     </div>
 </div>
 
-<!-- Create Task Modal -->
 <div class="modal fade" id="createTaskModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">

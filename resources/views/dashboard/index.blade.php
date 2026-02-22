@@ -68,7 +68,6 @@
 <body>
 <div class="container-fluid">
     <div class="row">
-        <!-- Sidebar -->
         <div class="col-md-3 sidebar">
             <div class="text-white mb-5">
                 <h4>
@@ -98,7 +97,6 @@
         </nav>
         </div>
 
-        <!-- Main Content -->
         <div class="col-md-9 main-content">
             <div class="header">
                 <h1>Dashboard</h1>

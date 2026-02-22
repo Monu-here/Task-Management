@@ -68,7 +68,6 @@
 <body>
 <div class="container-fluid">
     <div class="row">
-        <!-- Sidebar -->
         <div class="col-md-3 sidebar">
             <div class="text-white mb-5">
                 <h4>
@@ -98,7 +97,6 @@
             </nav>
         </div>
 
-        <!-- Main Content -->
         <div class="col-md-9 main-content">
             <div class="form-container">
                 <h2 class="mb-4">
@@ -143,23 +141,8 @@
                         >
                     </div>
 
-                    <div class="mb-3">
-                        <label for="company_id" class="form-label">Company</label>
-                        <select
-                            class="form-control @error('company_id') is-invalid @enderror"
-                            id="company_id"
-                            name="company_id"
-                            required
-                        >
-                            <option value="">-- Select Company --</option>
-                            @foreach($companies as $company)
-                                <option value="{{ $company->id }}" {{ old('company_id', $user->company_id) == $company->id ? 'selected' : '' }}>
-                                    {{ $company->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
 
+                   @if($user->role !== 'super_admin')
                     <div class="mb-4">
                         <label for="role" class="form-label">Role</label>
                         <select
@@ -169,10 +152,9 @@
                             required
                         >
                             <option value="user" {{ old('role', $user->role) == 'user' ? 'selected' : '' }}>User</option>
-                            <option value="manager" {{ old('role', $user->role) == 'manager' ? 'selected' : '' }}>Manager</option>
-                            <option value="admin" {{ old('role', $user->role) == 'admin' ? 'selected' : '' }}>Admin</option>
                         </select>
                     </div>
+                    @endif
 
                     <div class="d-flex gap-2">
                         <button type="submit" class="btn btn-submit">
