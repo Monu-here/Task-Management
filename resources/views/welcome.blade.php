@@ -174,66 +174,14 @@
 </head>
 
 <body>
-    @php
-        $projects = DB::table('projects')->get();
-    @endphp
     <div class="container-fluid">
         <div class="main-container">
             <div class="row content-row">
-                <div class="col-lg-8 col-md-12">
+                <div class="col-lg-12 col-md-12">
                     <div class="section-card">
                         <div class="section-title">
-                            <span><i class="fas fa-tasks me-2"></i>Tasks</span>
-                            <button class="btn btn-primary-custom" data-bs-toggle="modal" data-bs-target="#taskAdd">
-                                <i class="fas fa-plus me-1"></i> Add New Task
-                            </button>
-                        </div>
-                        <div class="filter-section">
-                            <form action="{{ route('home') }}" method="POST">
-                                @csrf
-                                <div class="row g-3">
-                                    <div class="col-md-4">
-                                        <label class="form-label fw-semibold">Project</label>
-                                        <select name="project_id" id="project_id" class="form-control">
-                                            <option value="" disabled
-                                                {{ old('project_id', request('project_id')) ? '' : 'selected' }}>Select
-                                                Project</option>
-                                            @foreach ($projects as $project)
-                                                <option value="{{ $project->id }}"
-                                                    {{ old('project_id', request('project_id')) == $project->id ? 'selected' : '' }}>
-                                                    {{ $project->name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label class="form-label fw-semibold">Status</label>
-                                        <select name="status" id="status" class="form-control">
-                                            <option value="" disabled
-                                                {{ old('status', request('status')) === null ? 'selected' : '' }}>Select
-                                                Status</option>
-                                            <option value="0"
-                                                {{ old('status', request('status')) == '0' ? 'selected' : '' }}>Pending
-                                            </option>
-                                            <option value="1"
-                                                {{ old('status', request('status')) == '1' ? 'selected' : '' }}>
-                                                Completed</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-4 d-flex align-items-end">
-                                        <div class="btn-group-custom d-flex w-100">
-                                            <button class="btn btn-primary-custom flex-fill">
-                                                <i class="fas fa-filter me-1"></i> Filter Tasks
-                                            </button>
-                                            <a href="{{ route('home') }}">
-                                                <button class="btn btn-danger-custom flex-fill">
-                                                    <i class="fas fa-times me-1"></i> Reset Filter
-                                                </button>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
+                            <span><i class="fas fa-tasks me-2"></i>My Tasks</span>
+
                         </div>
 
                         @if ($tasks->isNotEmpty())
@@ -268,86 +216,54 @@
                                                     @endif
                                                 </div>
                                             </div>
-                                            <div class="action-buttons">
-                                                <button class="btn btn-outline-primary btn-sm-custom"
-                                                    @if (!$task->status == 0) style="display: none;" @endif
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#taskupdate{{ $task->id }}">
-                                                    <i class="fas fa-edit me-1"></i> Edit
-                                                </button>
-                                                <a href="{{ route('task.delete', ['uuid' => $task->uuid]) }}">
-                                                    <button
-                                                        onclick="return confirm('Are you want to delete this task');"
-                                                        class="btn btn-outline-danger btn-sm-custom"
-                                                         @if (!$task->status == 0) style="display: none;" @endif>
-                                                        <i class="fas fa-trash me-1"></i>
-                                                        Delete
-                                                    </button>
-                                                </a>
-                                            </div>
                                         </div>
                                     </div>
                                 @endif
 
-                                @include('task.task-edit')
-                                @include('task.task-status-edit')
                             @endforeach
                         @else
-                            <div class="text-center text-muted">No Task are created.</div>
-
+                            <div class="text-center text-muted py-5">
+                                <i class="fas fa-inbox fa-3x mb-3" style="opacity: 0.5;"></i>
+                                <p>No tasks assigned to you.</p>
+                            </div>
                         @endif
 
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-12">
-                    <div class="section-card">
-                        <div class="section-title">
-                            <span><i class="fas fa-folder-open me-2"></i>Projects</span>
-                            <button class="btn btn-primary-custom" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">
-                                <i class="fas fa-plus me-1"></i> Add New Project
-                            </button>
-
-
-                        </div>
-
-                        @if ($projects->isNotEmpty())
-                            @foreach ($projects as $project)
-                                <div class="project-item"
-                                    style="background: linear-gradient(135deg, {{ $project->color_code }} 0%, #000  100%);">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div>
-                                            <h6 class="mb-1 fw-bold">{{ $project->name }}</h6>
-                                        </div>
-                                        <div class="action-buttons">
-                                            <button class="btn btn-light btn-sm-custom" data-bs-toggle="modal"
-                                                data-bs-target="#projectUpdate{{ $project->id }}"
-                                                style="color:{{ $project->color_code }} ">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            <a href="{{ route('project.delete', ['uuid' => $project->uuid]) }}">
-                                                <button class="btn btn-light btn-sm-custom text-danger">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </a>
+                        <!-- Task Status Update Modals -->
+                        @if ($tasks->isNotEmpty())
+                            @foreach ($tasks as $task)
+                                <div class="modal fade" id="taskStatusUpdate{{ $task->id }}" tabindex="-1" aria-labelledby="taskStatusUpdateLabel{{ $task->id }}" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="taskStatusUpdateLabel{{ $task->id }}">Update Task Status</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <form action="{{ route('home.task.status.update', $task->uuid) }}" method="POST">
+                                                @csrf
+                                                <div class="modal-body">
+                                                    <div class="form-group">
+                                                        <label for="status{{ $task->id }}">Status</label>
+                                                        <select name="status" id="status{{ $task->id }}" class="form-select">
+                                                            <option value="0" @selected($task->status == 0)>Pending</option>
+                                                            <option value="1" @selected($task->status == 1)>Completed</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary">Update</button>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
-                                @include('project.project-edit')
                             @endforeach
-                        @else
-                            <div class="text-center text-muted">No projects.</div>
                         @endif
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    {{-- {{project model open }} --}}
-    @include('project.project-add')
-    {{-- {{Project Model close}} --}}
-    @include('task.task-add')
-    @include('task.task-edit')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
     @if (Session::has('success'))
